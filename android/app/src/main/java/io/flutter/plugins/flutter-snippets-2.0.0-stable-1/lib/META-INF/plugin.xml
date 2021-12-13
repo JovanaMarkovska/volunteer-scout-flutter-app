@@ -1,0 +1,16 @@
+<idea-plugin>
+  <version>2.0.0-stable-1</version>
+  <change-notes>Update to showDialg to support for Flutter 2.0 Thanks ming-chu</change-notes>
+  <idea-version since-build="202.0"/>
+  <id>com.herbert.george.flutter-snippets</id>
+  <name>Flutter Snippets</name>
+  <vendor>George Herbert</vendor>
+  <description>
+For full details of the available snippet, please &lt;a href="https://github.com/georgeherby/flutter-snippets/blob/master/README.md"&gt;visit here&lt;/a&gt;
+</description>
+  <depends>com.intellij.modules.java</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <defaultLiveTemplates file="/liveTemplates/Flutter.xml"/>
+    <liveTemplateContext implementation="FlutterContext"/>
+  </extensions>
+</idea-plugin>

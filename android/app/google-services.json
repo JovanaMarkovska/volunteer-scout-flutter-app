@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "924741128642",
+    "project_id": "volunteer-scout-mobile-app",
+    "storage_bucket": "volunteer-scout-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924741128642:android:81ebaf8cc9aa478f16065b",
+        "android_client_info": {
+          "package_name": "com.jovanamarkovska.volunteerscout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924741128642-j1grrt9l8obdgqrfprai7u9d710jh6sm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jovanamarkovska.volunteerscout",
+            "certificate_hash": "3044946f07a9fd2b9a27ae70e0817c4050c68359"
+          }
+        },
+        {
+          "client_id": "924741128642-7si8ei6knpo7nj7dissajm51ei68kmsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrb5StyeaqzoyPaooiIty5pt7aZL6dxI0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924741128642-7si8ei6knpo7nj7dissajm51ei68kmsk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "924741128642-1fpd1e17ei9c1jec8mg6vj9ed7jropbk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jovanamarkovska.volunteerscout"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
