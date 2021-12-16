@@ -18,7 +18,7 @@ class _CreateAccountState extends State<CreateAccount> {
   submit(){
     final form = _formKey.currentState;
     if(form!.validate()){
-      form!.save();
+      form.save();
       SnackBar snackbar = SnackBar(content: Text("Welcome $username!"));
       _scaffoldKey.currentState!.showSnackBar(snackbar);
       Timer(Duration(seconds: 2),(){
@@ -59,7 +59,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         if(val!.trim().length < 8 || val.isEmpty){
                           return "Username too short!";
                         }
-                        else if(val!.trim().length > 12){
+                        else if(val.trim().length > 12){
                           return "Username too long!";
                         }
                         return null;

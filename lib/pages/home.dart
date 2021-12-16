@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:volunteer_scout_mobile_app/models/user.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
