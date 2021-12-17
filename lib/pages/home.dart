@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
   bool isAuth=false;
   late PageController pageController;
   int pageIndex=0;
+
   @override
   void initState(){
     super.initState();
