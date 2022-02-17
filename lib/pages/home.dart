@@ -77,13 +77,23 @@ class _HomeState extends State<Home> {
         "email": user.email,
         "displayName": user.displayName,
         "bio": "",
-        "timestamp":timestamp
+        "timestamp": timestamp,
+        "caseSearch": setSearchParam(username)
       });
       doc = await usersRef.doc(user.id).get();
     }
     currentUser = User.fromDocument(doc);
     print(currentUser);
     print(currentUser!.username);
+  }
+  static setSearchParam(String caseString) {
+    List<dynamic> caseSearchList = List.empty(growable: true);
+    String temp = "";
+    for (int i = 0; i < caseString.length; i++) {
+      temp = temp + caseString[i];
+      caseSearchList.add(temp);
+    }
+    return caseSearchList;
   }
 
   @override
@@ -134,7 +144,7 @@ class _HomeState extends State<Home> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.whatshot),),
           BottomNavigationBarItem(icon: Icon(Icons.notifications_active),),
-          BottomNavigationBarItem(icon: Icon(Icons.photo_camera,size:35.0,),),
+          BottomNavigationBarItem(icon: Icon(Icons.add_circle,size:40.0,),),
           BottomNavigationBarItem(icon: Icon(Icons.search),),
           BottomNavigationBarItem(icon: Icon(Icons.account_circle),),
         ],

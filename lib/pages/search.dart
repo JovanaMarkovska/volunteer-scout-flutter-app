@@ -21,11 +21,20 @@ class _SearchState extends State<Search> {
 
   handleSearch(String query) {
     Future<QuerySnapshot> users =
-        usersRef.where("username", isGreaterThanOrEqualTo: query).get();
+        usersRef.where("caseSearch", arrayContains: query).get();
     setState(() {
       searchResultsFuture = users;
     });
   }
+ // handleSearch(String query) {
+ //    Future<QuerySnapshot> users =
+ //        usersRef.where("username", isGreaterThanOrEqualTo: query).get();
+ //    setState(() {
+ //      searchResultsFuture = users;
+ //    });
+ //  }
+
+
 
   AppBar buildSearchField() {
     return AppBar(
