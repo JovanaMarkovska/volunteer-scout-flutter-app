@@ -14,7 +14,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'activity_feed.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
+final Reference storageRef = FirebaseStorage.instance.ref();
 final usersRef = FirebaseFirestore.instance.collection('users');
+final adsRef = FirebaseFirestore.instance.collection('ads');
 final DateTime timestamp = DateTime.now();
 User? currentUser;
 
@@ -129,7 +131,7 @@ class _HomeState extends State<Home> {
               onPressed: logout,
           ),
           ActivityFeed(),
-          Upload(),
+          Upload(currentUser: currentUser),
           Search(),
           Profile(),
         ],
