@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-class PostTile extends StatelessWidget {
+class AdScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text("Post Tile");
+    return Text("Ad Screen");
   }
 }
-

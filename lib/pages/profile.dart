@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:volunteer_scout_mobile_app/models/user.dart';
 import 'package:volunteer_scout_mobile_app/pages/edit_profile.dart';
 import 'package:volunteer_scout_mobile_app/pages/home.dart';
+import 'package:volunteer_scout_mobile_app/widgets/ad.dart';
 import 'package:volunteer_scout_mobile_app/widgets/header.dart';
 import 'package:volunteer_scout_mobile_app/widgets/progress.dart';
 
@@ -22,6 +23,30 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final String currentUserId = currentUser!.id;
 
+  @override
+  void initState() {
+    super.initState();
+    getProfileAds();
+  }
+  bool isLoading = false;
+  int adCount = 0;
+  List<Ad> ads = [];
+
+  getProfileAds() async {
+    setState(() {
+      isLoading = true;
+    });
+    QuerySnapshot snapshot = await adsRef.doc(widget.user!.id)
+        .collection('userAds')
+        .orderBy('timestamp',descending:true)
+        .get();
+
+    setState(() {
+      isLoading = false;
+      adCount = snapshot.docs.length;
+      ads = snapshot.docs.map((doc) => Ad.fromDocument(doc)).toList();
+    });
+  }
   Column buildCountColumn(String label, int count){
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +140,7 @@ class _ProfileState extends State<Profile> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    buildCountColumn("ads", 0),
+                    buildCountColumn("volunteer ads", adCount),
                   ],
                 ),
                 SizedBox(height: 10.0,),
@@ -170,7 +195,14 @@ class _ProfileState extends State<Profile> {
 
    // );
   }
-
+  buildProfileAds(){
+    if(isLoading){
+      return circularProgress();
+    }
+    return Column(
+      children: ads,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,6 +210,10 @@ class _ProfileState extends State<Profile> {
       body: ListView(
         children: <Widget>[
           buildProfileHeader(),
+          Divider(
+            height: 0.0,
+          ),
+          buildProfileAds(),
 
         ],
       ),
