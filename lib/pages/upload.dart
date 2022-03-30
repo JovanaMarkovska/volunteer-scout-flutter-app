@@ -35,6 +35,7 @@ class _UploadState extends State<Upload> {
 
   bool isUploading=false;
   String adId = Uuid().v4();
+  List<User> volunteers = [];
   DateTime selectedDate = DateTime.now();
   DateTime selectedStartDate = DateTime.now();
   DateTime selectedEndDate = DateTime.now();
@@ -207,7 +208,7 @@ class _UploadState extends State<Upload> {
   }
   createAdInFirestore({required String title,required String description,
     required String startDate,required String endDate, required String category,
-    required String location,required String mediaUrl}){
+    required String location,required String mediaUrl,required List<User> volunteers}){
     adsRef.doc(widget.currentUser!.id)
         .collection("userAds")
         .doc(adId)
@@ -223,6 +224,8 @@ class _UploadState extends State<Upload> {
           "startDate":startDate,
           "endDate":endDate,
           "timestamp": timestamp,
+          "volunteers": volunteers,
+
 
         });
 
@@ -241,6 +244,7 @@ class _UploadState extends State<Upload> {
       location: locationController.text,
       category: category,
       mediaUrl: mediaUrl,
+      volunteers: volunteers,
     );
     titleController.clear();
     descriptionController.clear();
