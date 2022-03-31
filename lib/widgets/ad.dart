@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:volunteer_scout_mobile_app/models/user.dart';
 import 'package:volunteer_scout_mobile_app/pages/comments.dart';
 import 'package:volunteer_scout_mobile_app/pages/home.dart';
+import 'package:volunteer_scout_mobile_app/pages/view_ad.dart';
 import 'package:volunteer_scout_mobile_app/widgets/progress.dart';
 
 class Ad extends StatefulWidget {
@@ -204,7 +205,7 @@ class _AdState extends State<Ad> {
                           Container(
                             padding: EdgeInsets.only(top: 2.0),
                             child: FlatButton(
-                                onPressed: ()=>print("applying to volunteer"),
+                                onPressed: viewAd,
                                 child: Container(
                                   width: 100.0,
                                   height: 27.0,
@@ -238,170 +239,27 @@ class _AdState extends State<Ad> {
               ],
             ),
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: <Widget>[
-          //     Column(
-          //       mainAxisAlignment: MainAxisAlignment.start,
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: <Widget>[
-          //           Container(
-          //             padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-          //             alignment: Alignment.topLeft,
-          //             child: Text(
-          //               category,
-          //               style: TextStyle(
-          //                   fontSize: 14.0,
-          //                 color: Colors.grey,
-          //               ),
-          //             ),
-          //           ),
-          //           Container(
-          //             padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-          //             //alignment: Alignment.topLeft,
-          //             child: Text(
-          //               title,
-          //               style: TextStyle(
-          //                   fontSize: 20.0,
-          //                   fontWeight: FontWeight.bold),
-          //             ),
-          //           ),
-          //           Container(
-          //             padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-          //             alignment: Alignment.topLeft,
-          //
-          //             child: Text(
-          //               "Dates: ${startDate} - ${endDate}" ,
-          //               style: TextStyle(fontSize: 14.0),
-          //             ),
-          //           ),
-          //           Container(
-          //             padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-          //             alignment: Alignment.topLeft,
-          //             child: Text(
-          //               "Happening in ${location}" ,
-          //               style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-          //             ),
-          //           ),
-          //           Container(
-          //             padding: EdgeInsets.only(top: 2.0),
-          //             child: FlatButton(
-          //                 onPressed: ()=>print("applying to volunteer"),
-          //                 child: Container(
-          //                   width: 100.0,
-          //                   height: 27.0,
-          //                   child: Text(
-          //                     "View Ad",
-          //                     style: TextStyle(
-          //                         color: Colors.white70,
-          //                         fontWeight: FontWeight.bold
-          //                     ),
-          //                   ),
-          //                   alignment: Alignment.center,
-          //                   decoration: BoxDecoration(
-          //                     color: Colors.blue,
-          //                     border: Border.all(
-          //                       color: Colors.blue,
-          //                     ),
-          //                     borderRadius: BorderRadius.circular(5.0),
-          //                   ),
-          //                 )
-          //             ),
-          //
-          //           ),
-          //
-          //         ]
-          //
-          //
-          //     ),
-          //     Column(
-          //         children: <Widget>[
-          //           Container(
-          //               constraints: BoxConstraints.tightFor(width: 120.0,height: 120.0,),
-          //               child: Image.network(
-          //                 mediaUrl,
-          //                 //width: 80.0,
-          //                 height: 120.0,
-          //                 fit: BoxFit.fitHeight,
-          //               )),
-          //         ]
-          //
-          //
-          //     ),
-          //   ],
-          // ),
-
-
-
 
         ],
       ),
     );
 
   }
-  // buildAdBody(){
-  //   return Container(
-  //     padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-  //     margin: EdgeInsets.all(10.0),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.stretch,
-  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       children: <Widget>[
-  //         Container(
-  //           padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-  //           child: Text(
-  //             title,
-  //             style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-  //           ),
-  //         ),
-  //         Container(
-  //           padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-  //           child: Text(
-  //             description,
-  //             style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-  //           ),
-  //         ),
-  //         Container(
-  //           padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-  //           child: Text(
-  //             category,
-  //             style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-  //           ),
-  //         ),
-  //         Container(
-  //           padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-  //           child: Text(
-  //             location,
-  //             style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-  //           ),
-  //         ),
-  //         Container(
-  //           padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-  //           child: Text(
-  //             startDate,
-  //             style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-  //           ),
-  //         ),
-  //         Container(
-  //           padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
-  //           child: Text(
-  //             endDate,
-  //             style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-  //           ),
-  //         ),
-  //         Container(
-  //             constraints: BoxConstraints.tightFor(width: 100.0),
-  //             child: Image.network(
-  //               mediaUrl,
-  //               fit: BoxFit.fitHeight,
-  //             )),
-  //
-  //       ],
-  //     ),
-  //   );
-  //
-  // }
+  viewAd(){
+    Navigator.push(context,MaterialPageRoute(builder: (context)=>
+        ViewAd(adId:adId,title:title,
+          description:description,
+          category:category,
+          startDate:startDate,
+          endDate:endDate,
+          volunteers:volunteers,
+          mediaUrl:mediaUrl,
+          ownerId:ownerId,
+          username: username,
+          location: location,
+
+        )));
+  }
 
   @override
   Widget build(BuildContext context) {
