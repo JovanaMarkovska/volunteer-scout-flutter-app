@@ -17,6 +17,7 @@ final GoogleSignIn googleSignIn = GoogleSignIn();
 final Reference storageRef = FirebaseStorage.instance.ref();
 final usersRef = FirebaseFirestore.instance.collection('users');
 final adsRef = FirebaseFirestore.instance.collection('ads');
+final discussionRef = FirebaseFirestore.instance.collection('discussion');
 final DateTime timestamp = DateTime.now();
 User? currentUser;
 
@@ -136,6 +137,19 @@ class _HomeState extends State<Home> {
           //Profile(profileId: currentUser!.id),
           Profile(user: currentUser,),
         ],
+        //TODO implement user roles
+        // children: <Widget>[
+        //   //Timeline(),
+        //   ElevatedButton(
+        //       child: Text('Log out'),
+        //       onPressed: logout,
+        //   ),
+        //   ActivityFeed(),
+        //   currentUser!.username == 'organization' ? Upload(currentUser: currentUser) : ActivityFeed(),
+        //   Search(),
+        //   //Profile(profileId: currentUser!.id),
+        //   Profile(user: currentUser,),
+        // ],
         controller: pageController,
         onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
@@ -150,6 +164,13 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(icon: Icon(Icons.add_circle,size:40.0,),),
           BottomNavigationBarItem(icon: Icon(Icons.search),),
           BottomNavigationBarItem(icon: Icon(Icons.account_circle),),
+
+          //TODO AFTER IMPLEMENTING USER ROLES, CHANGE BOTTOM NAV BAR
+          // BottomNavigationBarItem(icon: Icon(Icons.whatshot),),
+          // BottomNavigationBarItem(icon: Icon(Icons.notifications_active),),
+          // currentUser!.username == 'organization' ? BottomNavigationBarItem(icon: Icon(Icons.add_circle,size:40.0,),):BottomNavigationBarItem(icon: Icon(Icons.whatshot),),
+          // BottomNavigationBarItem(icon: Icon(Icons.search),),
+          // BottomNavigationBarItem(icon: Icon(Icons.account_circle),),
         ],
       ),
     );

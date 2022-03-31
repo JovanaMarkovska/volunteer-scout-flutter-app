@@ -18,7 +18,7 @@ class Ad extends StatefulWidget {
   late final String endDate;
   late final String mediaUrl;
   late final String title;
-  late final List<User> volunteers;
+  late final dynamic volunteers;
 
   Ad({
       required this.adId,
@@ -45,7 +45,7 @@ class Ad extends StatefulWidget {
       endDate:doc['endDate'] ,
       mediaUrl: doc['mediaUrl'],
       title:doc['title'] ,
-      volunteers: doc['volunteers'].cast<User>(),
+      volunteers: doc['volunteers'],
     );
   }
 
@@ -78,7 +78,7 @@ class _AdState extends State<Ad> {
   late final String endDate;
   late final String mediaUrl;
   late final String title;
-  late final List<User> volunteers;
+  late final dynamic volunteers;
   _AdState({
     required this.adId,
     required this.ownerId,
@@ -245,6 +245,7 @@ class _AdState extends State<Ad> {
     );
 
   }
+
   viewAd(){
     Navigator.push(context,MaterialPageRoute(builder: (context)=>
         ViewAd(adId:adId,title:title,

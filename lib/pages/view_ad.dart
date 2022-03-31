@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:volunteer_scout_mobile_app/models/user.dart';
+import 'package:volunteer_scout_mobile_app/pages/comments.dart';
 import 'package:volunteer_scout_mobile_app/pages/home.dart';
 import 'package:volunteer_scout_mobile_app/widgets/ad.dart';
 import 'package:volunteer_scout_mobile_app/widgets/progress.dart';
@@ -17,7 +18,7 @@ class ViewAd extends StatefulWidget {
   late final String endDate;
   late final String mediaUrl;
   late final String title;
-  late final List<User> volunteers;
+  late final dynamic volunteers;
 
   ViewAd({
     required this.adId,
@@ -44,8 +45,20 @@ class ViewAd extends StatefulWidget {
       endDate: doc['endDate'],
       mediaUrl: doc['mediaUrl'],
       title: doc['title'],
-      volunteers: doc['volunteers'].cast<User>(),
+      volunteers: doc['volunteers'],
     );
+  }
+  getVolunteersCount(volunteers){
+    if(volunteers == null){
+      return 0;
+    }
+    int count = 0;
+    volunteers.values.forEach((val){
+      if(val == true){
+        count += 1;
+      }
+    });
+    return count;
   }
   @override
   _ViewAdState createState() =>
@@ -61,10 +74,12 @@ class ViewAd extends StatefulWidget {
         mediaUrl: this.mediaUrl,
         title: this.title,
         volunteers: this.volunteers,
+        volunteersCount: getVolunteersCount(this.volunteers),
 
       );
 }
 class _ViewAdState extends State<ViewAd> {
+  final String currentUserId = currentUser!.id;
   late final String adId;
   late final String ownerId;
   late final String username;
@@ -75,7 +90,9 @@ class _ViewAdState extends State<ViewAd> {
   late final String endDate;
   late final String mediaUrl;
   late final String title;
-  late final List<User> volunteers;
+  int volunteersCount;
+  Map volunteers;
+  late bool hasAlreadyApplied;
 
   _ViewAdState({
   required this.adId,
@@ -88,7 +105,10 @@ class _ViewAdState extends State<ViewAd> {
   required this.endDate,
   required this.mediaUrl,
   required this.title,
-  required this.volunteers});
+  required this.volunteers,
+  required this.volunteersCount});
+
+
 
   buildAdHeader(){
     return FutureBuilder<DocumentSnapshot>(
@@ -119,7 +139,40 @@ class _ViewAdState extends State<ViewAd> {
   }
   applyToVolunteer(){
     //TODO implement the button to apply
+    bool _hasAlreadyApplied = volunteers[currentUserId] == true;
+    if(_hasAlreadyApplied){
+      adsRef.doc(ownerId).collection('userAds')
+          .doc(adId)
+          .update({'volunteers.$currentUserId':false});
+      setState(() {
+      volunteersCount -= 1;
+      hasAlreadyApplied = false;
+      volunteers[currentUserId] = false;
 
+      });
+    }
+    else if(!_hasAlreadyApplied){
+      adsRef.doc(ownerId).collection('userAds')
+          .doc(adId)
+          .update({'volunteers.$currentUserId':true});
+      setState(() {
+        volunteersCount += 1;
+        hasAlreadyApplied = true;
+        volunteers[currentUserId] = true;
+
+      });
+    }
+
+
+  }
+  showDiscussion(BuildContext context, {required String adId, required String ownerId, required String mediaUrl}){
+    Navigator.push(context,MaterialPageRoute(builder: (context) {
+      return Comments(
+        adId:adId,
+        adOwnerId:ownerId,
+        adMediaUrl:mediaUrl
+      );
+    }));
   }
   buildAdBody(){
     return Container(
@@ -151,6 +204,14 @@ class _ViewAdState extends State<ViewAd> {
                 color: Colors.grey,
                 fontWeight: FontWeight.bold,
               ),
+            ),
+          ),
+          SizedBox(height: 20.0,),
+          Container(
+            padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
+            child: Text(
+              "${volunteersCount} volunteers applied for this ad",
+              style: TextStyle(fontSize: 20.0),
             ),
           ),
           SizedBox(height: 20.0,),
@@ -190,7 +251,7 @@ class _ViewAdState extends State<ViewAd> {
                   width: 200.0,
                   height: 60.0,
                   child: Text(
-                    "Apply",
+                    hasAlreadyApplied ? "Remove application" :"Apply",
                     style: TextStyle(
                         fontSize: 20.0,
                         color: Colors.white,
@@ -201,7 +262,7 @@ class _ViewAdState extends State<ViewAd> {
                   decoration: BoxDecoration(
                     color: Colors.blue,
                     border: Border.all(
-                      color: Colors.blue,
+                      color:  Colors.blue,
                     ),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -209,6 +270,30 @@ class _ViewAdState extends State<ViewAd> {
             ),
 
           ),
+          SizedBox(height: 40.0,),
+          GestureDetector(
+            onTap: ()=>showDiscussion(
+                context,
+              adId: adId,
+              ownerId: ownerId,
+              mediaUrl:mediaUrl,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "View Discussion",
+                  style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 10.0),
+                Icon(Icons.chat,size:28.0,color:Colors.black),
+
+
+              ],
+            )
+
+            ),
+
 
 
         ],
@@ -221,6 +306,7 @@ class _ViewAdState extends State<ViewAd> {
 
   @override
   Widget build(BuildContext context) {
+    hasAlreadyApplied = (volunteers[currentUserId] == true);
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
