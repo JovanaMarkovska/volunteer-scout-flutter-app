@@ -144,6 +144,7 @@ class _ViewAdState extends State<ViewAd> {
       adsRef.doc(ownerId).collection('userAds')
           .doc(adId)
           .update({'volunteers.$currentUserId':false});
+      removeApplicationfromActivityFeed();
       setState(() {
       volunteersCount -= 1;
       hasAlreadyApplied = false;
@@ -155,6 +156,7 @@ class _ViewAdState extends State<ViewAd> {
       adsRef.doc(ownerId).collection('userAds')
           .doc(adId)
           .update({'volunteers.$currentUserId':true});
+      addApplicationtoActivityFeed();
       setState(() {
         volunteersCount += 1;
         hasAlreadyApplied = true;
@@ -164,6 +166,55 @@ class _ViewAdState extends State<ViewAd> {
     }
 
 
+  }
+  removeApplicationfromActivityFeed(){
+    // bool isNotAdOwner = currentUserId != ownerId;
+    // if(isNotAdOwner) {
+      activityFeedRef.doc(ownerId)
+          .collection("feedItems")
+          .doc(adId)
+          .get()
+          .then((doc){
+            if(doc.exists){
+              doc.reference.delete();
+            }
+
+        //   .update({
+        // "type": "removed his application",
+        // "username": currentUser!.username,
+        // "userId": currentUser!.id,
+        // "userProfileImg": currentUser!.photoUrl,
+        // "adId": adId,
+        // "mediaUrl": mediaUrl,
+        // "timestamp": timestamp,
+
+      });
+    // }
+    //remove application from feedItems
+        // .get()
+        // .then((doc){
+        //   if(doc.exists){
+        //     doc.reference.delete();
+        //   }}
+        //   );
+  }
+  addApplicationtoActivityFeed(){
+    //notification when OTHER user applies for the ad
+    // bool isNotAdOwner = currentUserId != ownerId;
+    // if(isNotAdOwner){
+      activityFeedRef.doc(ownerId)
+          .collection("feedItems")
+          .doc(adId)
+          .set({
+        "type" : "applied",
+        "username":currentUser!.username,
+        "userId": currentUserId,
+        "userProfileImg":currentUser!.photoUrl,
+        "adId":adId,
+        "mediaUrl":mediaUrl,
+        "timestamp":timestamp,
+      });
+    // }
   }
   showDiscussion(BuildContext context, {required String adId, required String ownerId, required String mediaUrl}){
     Navigator.push(context,MaterialPageRoute(builder: (context) {
