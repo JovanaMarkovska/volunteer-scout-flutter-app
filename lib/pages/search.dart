@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:volunteer_scout_mobile_app/pages/profile.dart';
 import 'package:volunteer_scout_mobile_app/widgets/progress.dart';
 import 'home.dart';
 import 'package:volunteer_scout_mobile_app/models/user.dart';
@@ -26,15 +27,6 @@ class _SearchState extends State<Search> {
       searchResultsFuture = users;
     });
   }
- // handleSearch(String query) {
- //    Future<QuerySnapshot> users =
- //        usersRef.where("username", isGreaterThanOrEqualTo: query).get();
- //    setState(() {
- //      searchResultsFuture = users;
- //    });
- //  }
-
-
 
   AppBar buildSearchField() {
     return AppBar(
@@ -120,6 +112,13 @@ class UserResult extends StatelessWidget {
   final User user;
 
   UserResult(this.user);
+
+  showProfile(BuildContext context, { required User user })  {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Profile(user:user))
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -127,7 +126,7 @@ class UserResult extends StatelessWidget {
       child: Column(
         children: <Widget>[
           GestureDetector(
-            onTap: () => print('tapped'),
+            onTap: () => showProfile(context,user:user),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: Colors.grey,

@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:volunteer_scout_mobile_app/models/user.dart';
 import 'package:volunteer_scout_mobile_app/pages/comments.dart';
 import 'package:volunteer_scout_mobile_app/pages/home.dart';
+import 'package:volunteer_scout_mobile_app/pages/profile.dart';
 import 'package:volunteer_scout_mobile_app/widgets/ad.dart';
 import 'package:volunteer_scout_mobile_app/widgets/header.dart';
 import 'package:volunteer_scout_mobile_app/widgets/progress.dart';
@@ -59,6 +61,7 @@ class ActivityFeedItem extends StatelessWidget {
   final String commentData;
   final Timestamp timestamp;
   late String activityItemText;
+  late User? user;
 
   ActivityFeedItem({
       required this.username,
@@ -71,7 +74,6 @@ class ActivityFeedItem extends StatelessWidget {
       required this.timestamp});
 
   factory ActivityFeedItem.fromDocument(DocumentSnapshot doc){
-
     return ActivityFeedItem(
         username: doc['username'],
         userId: doc['userId'],
@@ -83,6 +85,7 @@ class ActivityFeedItem extends StatelessWidget {
         timestamp: doc['timestamp'],
     );
   }
+
   configureNotificationPreview() async {
 
     if(type == 'applied'){
@@ -93,7 +96,13 @@ class ActivityFeedItem extends StatelessWidget {
     }
   }
   showAd(context){
-    //TODO IMPLEMENT ON TAP
+    //TODO IMPLEMENT ON TAP - find ad obj by adId
+
+  }
+  showProfile(BuildContext context, { required String profileId }) async {
+
+    //TODO IMPLEMENT ON TAP - find user obj by profileId
+
   }
   @override
   Widget build(BuildContext context) {
@@ -129,7 +138,7 @@ class ActivityFeedItem extends StatelessWidget {
             child: CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(userProfileImg),
             ),
-              onTap: ()=>print("show profile"),
+              onTap: () => print("show profile"),
 
           ),
           subtitle: Text(
