@@ -19,6 +19,7 @@ final usersRef = FirebaseFirestore.instance.collection('users');
 final adsRef = FirebaseFirestore.instance.collection('ads');
 final discussionRef = FirebaseFirestore.instance.collection('discussion');
 final activityFeedRef = FirebaseFirestore.instance.collection('feed');
+final timelineRef = FirebaseFirestore.instance.collection('timeline');
 final DateTime timestamp = DateTime.now();
 User? currentUser;
 
@@ -127,11 +128,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          //Timeline(),
-          ElevatedButton(
-              child: Text('Log out'),
-              onPressed: logout,
-          ),
+          Timeline(currentUser: currentUser),
           ActivityFeed(),
           Upload(currentUser: currentUser),
           Search(),
