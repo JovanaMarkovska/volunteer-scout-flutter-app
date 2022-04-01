@@ -93,7 +93,7 @@ class _ViewAdState extends State<ViewAd> {
   int volunteersCount;
   Map volunteers;
   late bool hasAlreadyApplied;
-
+  late bool isAdOwner = currentUserId == ownerId;
   _ViewAdState({
   required this.adId,
   required this.ownerId,
@@ -133,9 +133,66 @@ class _ViewAdState extends State<ViewAd> {
               ),
             ),
           ),
+          trailing: isAdOwner ? IconButton(
+            onPressed: ()=>handleDeleteAd(context),
+            icon: Icon(Icons.more_vert),
+          ):Text(''),
         );
       },
     );
+  }
+  handleDeleteAd(BuildContext parentContext){
+    return showDialog(context: parentContext,
+        builder: (context){
+          return SimpleDialog(title: Text("Remove this ad?"),
+          children: [
+            SimpleDialogOption(
+              onPressed: (){
+                Navigator.pop(context);
+                deleteAd();
+              },
+              child: Text('Delete',
+              style: TextStyle(
+                color: Colors.red,
+              ),),
+            ),
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Cancel'),
+            ),
+          ],);
+        });
+
+  }
+  //to delete ad, currentuserid and ownerid must be same
+  deleteAd() async {
+    adsRef
+        .doc(ownerId)
+        .collection('userAds')
+        .doc(adId).get()
+        .then((doc) {
+          if(doc.exists){
+            doc.reference.delete();
+          }
+    });
+    //delete uploaded image
+    storageRef.child("post_$adId.jpg").delete();
+    //delete activity feed ref
+    QuerySnapshot activityFeedSnapshot = await activityFeedRef.doc(ownerId)
+    .collection("feedItems").where('adId', isEqualTo: adId).get();
+
+    activityFeedSnapshot.docs.forEach((doc){
+      if(doc.exists){
+        doc.reference.delete();
+      }
+    });
+    //delete discussions
+    QuerySnapshot discussionSnapshot = await discussionRef.doc(adId).collection('discussion').get();
+    discussionSnapshot.docs.forEach((doc){
+      if(doc.exists){
+        doc.reference.delete();
+      }
+    });
   }
   applyToVolunteer(){
     //TODO implement the button to apply
