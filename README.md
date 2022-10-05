@@ -4,7 +4,6 @@ Volunteer Scout is intended to open doors for people, no matter what age, who lo
 ## Technology Stack
 - Flutter
 - Firebase
-- Google services
 
 ## UI
 <img src="https://user-images.githubusercontent.com/44169539/194013475-dc57f148-16ee-4186-8ed4-65b68c644c9a.jpg" width="150"/> <img src="https://user-images.githubusercontent.com/44169539/194013672-5a5cba7a-2d9c-40c4-8cbe-5c33f85dadde.jpg" width="150"/> <img src="https://user-images.githubusercontent.com/44169539/194013507-1e8d1025-a55b-4bde-9d93-cded523dffd3.jpg" width="150"/> 
