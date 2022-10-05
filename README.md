@@ -4,7 +4,8 @@ Volunteer Scout is intended to open doors for people, no matter what age, who lo
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application.![307812519_1480316612487475_5871793811931376105_n](https://user-images.githubusercontent.com/44169539/194011840-856d69d5-cb12-4e17-abc1-cb8d555c2ae6.jpg)
+
 
 A few resources to get you started if this is your first Flutter project:
 
